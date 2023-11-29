@@ -1,0 +1,18 @@
+LOC: eog
+ROC: eog
+EMG1: emg
+EMG2: emg
+EKGL: ecg
+EKGR: ecg
+T1: misc
+T2: misc
+Nasion: misc
+CHIN1 : emg
+CHIN2 : emg
+ECGL: ecg
+ECGR: ecg
+LAT1 : emg
+LAT2 : emg
+# Assuming for tests this is right
+LUOC : eog
+RLOC : eog

@@ -1,0 +1,20 @@
+# This file defines feature extraction steps as well as their keyword arguments.
+# By externalizing the order, we can use reproducable code and allow individuals to comprehend/change the preprocessing steps quickly.
+# This file can be called in the main.py file. Alternatively, the main body of the script can query the user for steps, then generate a similar file to this one with user specified filename.
+
+spectral_energy_welch:
+    step_nums:
+        - 1
+        - 2
+    low_freq:
+        - 1
+        - 8
+    hi_freq:
+        - 4
+        - 12
+    win_size:
+        - 2
+        - 2
+    win_stride:
+        - 1
+        - 1

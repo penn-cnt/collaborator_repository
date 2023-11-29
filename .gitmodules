@@ -1,0 +1,36 @@
+[submodule "CNT_TOOLS/CNT_research_tools"]
+	path = CNT_TOOLS/CNT_research_tools
+	url = https://github.com/penn-cnt/CNT_research_tools.git
+[submodule "CNT_research_tools"]
+	path = CNT_research_tools
+	url = https://github.com/penn-cnt/CNT_research_tools.git
+[submodule "ieegpy"]
+	path = ieegpy
+	url = https://github.com/ieeg-portal/ieegpy.git
+[submodule "epycom"]
+	path = epycom
+	url = https://gitlab.com/icrc-bme/epycom.git
+[submodule "core_libraries/submodules/CNT_research_tools"]
+	path = core_libraries/submodules/CNT_research_tools
+	url = https://github.com/penn-cnt/CNT_research_tools.git
+[submodule "core_libraries/submodules/ieegpy"]
+	path = core_libraries/submodules/ieegpy
+	url = https://github.com/ieeg-portal/ieegpy.git
+[submodule "core_libraries/submodules/epycom"]
+	path = core_libraries/submodules/epycom
+	url = https://gitlab.com/icrc-bme/epycom.git
+[submodule "core_libraries/submodules/bctpy"]
+	path = core_libraries/submodules/bctpy
+	url = https://github.com/aestrivex/bctpy.git
+[submodule "core_libraries/submodules/RNS_processing_toolbox"]
+	path = core_libraries/submodules/RNS_processing_toolbox
+	url = https://github.com/penn-cnt/RNS_processing_toolbox
+[submodule "core_libraries/submodules/nibabel"]
+	path = core_libraries/submodules/nibabel
+	url = https://github.com/nipy/nibabel.git
+[submodule "core_libraries/submodules/dipy"]
+	path = core_libraries/submodules/dipy
+	url = https://github.com/dipy/dipy.git
+[submodule "core_libraries/submodules/networkx"]
+	path = core_libraries/submodules/networkx
+	url = https://github.com/networkx/networkx.git

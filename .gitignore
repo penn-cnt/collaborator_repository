@@ -1,0 +1,20 @@
+# Specific files and folders to ignore
+/user_data/**
+/core_libraries/build/**
+**.DS_Store**
+scripts/PIPELINE*
+
+
+# Filetypes to ignore
+*.edf
+*.nii
+*.nii.gz
+*.[0-9]
+
+*.mat
+*.npy
+*.pickle
+*.pkl
+
+# Exceptions
+!/user_data/README.md
