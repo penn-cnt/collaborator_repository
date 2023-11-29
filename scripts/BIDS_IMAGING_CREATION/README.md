@@ -1,3 +1,4 @@
+# Imaging Data BIDS Converter
 This code is meant to help with the creation of BIDS imaging data in Python. We've found HEUDICONV can be difficult to implement, so this is meant to be a more user-friendly option.
 
 Example instantiation.
