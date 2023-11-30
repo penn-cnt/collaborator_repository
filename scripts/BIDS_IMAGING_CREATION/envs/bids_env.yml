@@ -1,4 +1,4 @@
-name: cnt_codehub
+name: bids_env
 channels:
   - conda-forge
   - defaults
@@ -9,17 +9,15 @@ dependencies:
   - pandas
   - requests
   - deprecation
-  - tqdm
   - ipython
   - pytorch
-  - scikit-learn
   - pip:
     - pennprov
     - mne
     - mne-bids
     - mne-icalabel
     - pyEDFlib
-    - EDFlib-Python
-    - pyyaml
-    - ../wheels/ieeg-1.6-py3-none-any.whl
-
+    - bids
+    - pydicom
+    - nibabel
+    - prettytable
