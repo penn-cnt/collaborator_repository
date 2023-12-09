@@ -262,7 +262,7 @@ if __name__ == '__main__':
     parser   = argparse.ArgumentParser()
     parser.add_argument('--dataset', help='Input path to the folder containing niftii files.')
     parser.add_argument('--bidsroot', help='Output path to the BIDS root directory.')
-    parser.add_argument('--datalake', help='Output path to the bids datalake for image naming.',default="./HUP_BIDS_DATALAKE.pickle")
+    parser.add_argument('--datalake', help='Output path to the bids datalake for image naming.',default="./datalakes/HUP_BIDS_DATALAKE.pickle")
     parser.add_argument('--datefile', help='Output path of session names mapped to acquisition dates for a given patient.',default='DATE_TO_SESSION.csv')
     parser.add_argument('--subject', help='Subject ID.')
     args = parser.parse_args()
