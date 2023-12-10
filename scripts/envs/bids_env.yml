@@ -21,3 +21,5 @@ dependencies:
     - pydicom
     - nibabel
     - prettytable
+    - ./ieeg-1.6-py3-none-any.whl
+    - EDFlib-Python

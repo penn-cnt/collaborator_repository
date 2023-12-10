@@ -181,7 +181,7 @@ def main(args,run_dict,searchpath):
 
         # Update the dataframe for future entries that match            
         iarr = np.array([args.subject,acq_date,session]).reshape((1,3))
-        DF   = DF.append(PD.DataFrame(iarr,columns=DF.columns))
+        DF   = PD.concat((DF,PD.DataFrame(iarr,columns=DF.columns)))
         DF.to_csv(args.datefile,index=False)
 
     # Maintain the run counter
@@ -267,6 +267,16 @@ if __name__ == '__main__':
     parser.add_argument('--subject', help='Subject ID.')
     args = parser.parse_args()
     
+    # Make sure the folders have the right trailing characters
+    if args.dataset[-1] != '/':
+        args.dataset += '/'
+    if args.bidsroot[-1] != '/':
+        args.bidsroot += '/'
+
+    # Make the bids directory as needed
+    if not os.path.exists(args.bidsroot):
+        os.system(f"mkdir -p {args.bidsroot}")
+
     # Add a dataset description
     dataset_description_path = os.path.join(args.bidsroot, 'dataset_description.json')
     make_dataset_description(dataset_description_path)
