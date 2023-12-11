@@ -48,6 +48,10 @@ if __name__ == '__main__':
     selection_group.add_argument("--annotations", action='store_true', default=False, help="CSV file with de-identified unique patient id, ieeg filename, and targets (optional). Format:[uid,ieeg_filename,target]")
     args = parser.parse_args()
 
+    # Clean up directory structure
+    if args.bidsroot[-1] != '/':
+        args.bidsroot += '/'
+
     # Selection criteria
     if args.ieeg:    
         if args.cli:

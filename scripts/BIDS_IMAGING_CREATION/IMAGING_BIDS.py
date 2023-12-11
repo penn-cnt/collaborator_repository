@@ -212,7 +212,7 @@ def main(args,run_dict,searchpath):
             run_dict[int(args.subject)][acq_date][data_type]["_"+task]["_"+acq]["_"+ce][modality] = 1
         run = 1
 
-    # Define entites for the pybids pathing that are shared
+    # Define entites for the pybids pathing that are shared. Put in dict if we want to return it at somepoint.
     entities  = {}
     entities['subject']     = '%04d' %(int(args.subject))
     entities['session']     = session
@@ -237,7 +237,6 @@ def main(args,run_dict,searchpath):
         print("Making %s" %(bids_path))
 
         # Save the nifti to its new home
-        #nifti_img.to_filename(bids_path)
         shutil.copyfile(ifile, bids_path)
 
         # Create a new BIDSLayout object
@@ -283,8 +282,3 @@ if __name__ == '__main__':
 
     # Loop over json data and work file by file
     wrapper(args)
-        
-        
-        
-        
-        
