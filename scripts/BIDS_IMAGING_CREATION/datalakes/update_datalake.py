@@ -86,8 +86,17 @@ class data_update:
         while user_input not in ['y','n']:
             user_input=input("Confirm changes (y/n)? ").lower()
         
+        # Make dictionary
+        self.datalake[self.site][user_array[0]] = {}
+        self.datalake[self.site][user_array[0]]['scan_type'] = user_array[1]
+        self.datalake[self.site][user_array[0]]['data_type'] = user_array[2]
+        self.datalake[self.site][user_array[0]]['modality']  = user_array[3]
+        self.datalake[self.site][user_array[0]]['task']      = user_array[4]
+        self.datalake[self.site][user_array[0]]['acq']       = user_array[5]
+        self.datalake[self.site][user_array[0]]['ce']        = user_array[6]
+
         # Save output if requested
-        #pickle.dump(self.dataframe,open(self.outfile,'wb'))
+        pickle.dump(self.datalake,open(self.outfile,'wb'))
 
     def bulk_update(self,upload_file):
 
@@ -117,7 +126,8 @@ class data_update:
             user_input=input("Confirm changes (y/n)? ").lower()
         
         # Save output if requested
-        #pickle.dump(self.dataframe,open(self.outfile,'wb'))
+        print(self.dataframe)
+        pickle.dump(self.dataframe,open(self.outfile,'wb'))
         
 
 class data_manager(data_view,data_update):
@@ -126,6 +136,7 @@ class data_manager(data_view,data_update):
         self.datalake = pickle.load(open(args.datalake,"rb"))
         self.site     = args.site
         self.datalake_to_dataframe()
+        data_update.__init__(self,args.output)
 
         # Case statement for usage type
         if args.review:
@@ -186,6 +197,10 @@ if __name__=="__main__":
 
     # Argument parsing
     args = argparser()
+
+    # Update output if needed
+    if args.output == None:
+        args.output == args.datalake
 
     # Enter main body of code
     DM = data_manager(args)
