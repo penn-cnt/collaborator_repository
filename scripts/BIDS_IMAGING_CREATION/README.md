@@ -8,7 +8,7 @@ For information on how to install a conda environment from a yaml file, please c
   
 ## Example
 A sample call to this script may look like:
-> DICOM_TO_BIDS.py --dataset RAW/ --datefile DICOM_DATES.csv --datalake HUP_BIDS_DATALAKE.pickle --bidsroot ./BIDSROOT/ --subject 0
+> IMAGING_BIDS.py --dataset RAW/ --datefile DICOM_DATES.csv --datalake HUP_BIDS_DATALAKE.pickle --bidsroot ./BIDSROOT/ --subject 0
 
 where
 - dataset: Is the directory (i.e. 'RAW/') containing the NIFTII data
