@@ -7,8 +7,12 @@ Located in the envs folder, you will find a yaml file meant to create an anacond
 For information on how to install a conda environment from a yaml file, please consult the [conda documentation](https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#creating-an-environment-from-an-environment-yml-file).
   
 ## Example
+
+### 01
 A sample call to this script may look like:
-> DICOM_TO_BIDS.py --dataset RAW/ --datefile DICOM_DATES.csv --datalake HUP_BIDS_DATALAKE.pickle --bidsroot ./BIDSROOT/ --subject 0
+```
+IMAGING_BIDS.py --dataset RAW/ --datefile DICOM_DATES.csv --datalake HUP_BIDS_DATALAKE.pickle --bidsroot ./BIDSROOT/ --subject 0
+```
 
 where
 - dataset: Is the directory (i.e. 'RAW/') containing the NIFTII data
@@ -18,4 +22,10 @@ where
 
 For more help, please run:
 
-> DICOM_TO_BIDS.py --help
+> IMAGING_BIDS.py --help
+
+### 02
+
+```
+python IMAGING_BIDS.py --dataset ../../user_data/samples/NII/ --bidsroot ../../user_data/BIDS --subject 1
+```
