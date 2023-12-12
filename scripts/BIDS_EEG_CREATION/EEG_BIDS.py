@@ -84,11 +84,8 @@ if __name__ == '__main__':
         EH = EDF_handler(args,map_data,input_files)
         EH.save_data()
 
-
-
-
-
-                    
-
-
-    
+    # Make a bids ignore file
+    fp = open(args.bidsroot+'.bidsignore','w')
+    fp.write('subject_map.csv\n')
+    fp.write('**targets**pickle')
+    fp.close()

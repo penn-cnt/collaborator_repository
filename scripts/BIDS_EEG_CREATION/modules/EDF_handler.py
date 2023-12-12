@@ -12,14 +12,17 @@ class EDF_handler(BIDS_handler):
         self.map_data     = map_data
         self.input_files  = input_files
         self.subject_path = args.bidsroot+args.subject_file
+        self.old_uid      = -999
     
     def save_data(self):
         for ii,self.current_file in enumerate(self.input_files):
             self.uid    = self.map_data['uid'].values[ii]
             self.target = self.map_data['target'].values[ii] 
             flag        = self.edf_test()
-            if flag:
+            if self.uid != self.old_uid:
                 BIDS_handler.__init__(self)
+                self.old_uid = self.uid
+            if flag:
                 self.read_edf()
                 BIDS_handler.get_channel_type(self)
                 BIDS_handler.make_info(self)
