@@ -81,7 +81,7 @@ def main(args,run_dict,searchpath):
     acq_date = metadata["AcquisitionTime"]
     
     # Get the series value
-    series         = metadata["ProtocolName"].lower()
+    series = metadata["ProtocolName"].lower()
     
     # Check to see if the date file exists, if not, create it
     if path.exists(args.datefile):
@@ -91,13 +91,16 @@ def main(args,run_dict,searchpath):
 
     # Save the data tpying info
     try:
-        keyinfo   = datalake['HUP'][series]
-        scan_type = keyinfo['scan_type']
-        data_type = keyinfo['data_type']
-        modality  = keyinfo['modality']
-        task      = keyinfo['task']
-        acq       = keyinfo['acq']
-        ce        = keyinfo['ce']
+        if not args.by_path:
+            keyinfo   = datalake['HUP'][series]
+            scan_type = keyinfo['scan_type']
+            data_type = keyinfo['data_type']
+            modality  = keyinfo['modality']
+            task      = keyinfo['task']
+            acq       = keyinfo['acq']
+            ce        = keyinfo['ce']
+        else:
+            keyinfo = datalake['']
     except KeyError:
         write_ignore(args.bidsroot,args.dataset)
         return run_dict
@@ -263,7 +266,9 @@ if __name__ == '__main__':
     parser.add_argument('--bidsroot', required=True, help='Output path to the BIDS root directory.')
     parser.add_argument('--datalake', help='Output path to the bids datalake for image naming.',default="./datalakes/HUP_BIDS_DATALAKE.pickle")
     parser.add_argument('--datefile', help='Output path of session names mapped to acquisition dates for a given patient.',default='DATE_TO_SESSION.csv')
-    parser.add_argument('--subject',required=True, help='Subject ID.')
+    parser.add_argument('--subject', required=True, help='Subject ID.')
+    parser.add_argument('--subject', type=str, default='HUP', help='Subject ID.')
+    parser.add_argument('--by_path', action='store_true', default=False, help="Use path to determine keywords.")
     args = parser.parse_args()
     
     # Make sure the folders have the right trailing characters
