@@ -2,10 +2,12 @@ import re
 import mne
 import glob
 import pickle
+import getpass
 import mne_bids
 import numpy as np
 import pandas as PD
 from os import path
+from datetime import date
 from mne_bids import BIDSPath, write_raw_bids
 
 class BIDS_handler:
@@ -32,26 +34,28 @@ class BIDS_handler:
         # Check if we already have this subject
         uids = subject_uid_df['uid'].values
         if self.uid not in uids:
-            files = glob.glob(self.args.bidsroot+'sub-*')
-            if len(files) > 0:
-                self.subject_num  = max([int(ifile.split('sub-')[-1]) for ifile in files])+1
-            else:
-                self.subject_num = 1
+            self.subject_num = self.proposed_sub
         else:
             self.subject_num = int(subject_uid_df['subject_number'].values[np.where(uids==self.uid)[0][0]])
 
     def get_session_number(self):
 
-        # Get the folder strings
-        folders = glob.glob("%ssub-%04d/*" %(self.args.bidsroot,self.subject_num))
-        folders = [ifolder.split('/')[-1] for ifolder in folders]
-        
-        # Search for the session numbers
-        regex = re.compile(r'\d+$')
-        if len(folders) > 0:
-            self.session_number = max([int(re.search(regex, ival).group()) for ival in folders])+1
+        # Get the session number by file if possible, otherwise intuit by number of folders
+        pattern = r'Day(\d+)'
+        match = re.search(pattern, self.current_file)
+        if match:
+            self.session_number = int(match.group(1))
         else:
-            self.session_number = 1
+            # Get the folder strings
+            folders = glob.glob("%ssub-%04d/*" %(self.args.bidsroot,self.subject_num))
+            folders = [ifolder.split('/')[-1] for ifolder in folders]
+
+            # Search for the session numbers
+            regex = re.compile(r'\d+$')
+            if len(folders) > 0:
+                self.session_number = max([int(re.search(regex, ival).group()) for ival in folders])+1
+            else:
+                self.session_number = 1
 
     def get_channel_type(self, threshold=15):
 
@@ -113,30 +117,31 @@ class BIDS_handler:
                 events = np.array([[int(index),0,self.event_mapping[desc]]])
 
                 # Save the edf in bids format
-                session_str = "%s%03d" %(self.args.session,self.session_number)
-                bids_path   = mne_bids.BIDSPath(root=self.args.bidsroot, datatype='eeg', session=session_str, subject='%04d' %(self.subject_num), run=idx+1, task='task')
-                write_raw_bids(bids_path=bids_path, raw=raw, events_data=events,event_id=self.event_mapping, allow_preload=True, format='EDF',verbose=False,overwrite=True)
+                session_str    = "%s%03d" %(self.args.session,self.session_number)
+                self.bids_path = mne_bids.BIDSPath(root=self.args.bidsroot, datatype='eeg', session=session_str, subject='%05d' %(self.subject_num), run=idx+1, task='task')
+                write_raw_bids(bids_path=self.bids_path, raw=raw, events_data=events,event_id=self.event_mapping, allow_preload=True, format='EDF',verbose=False)
 
                 # Save the targets with the edf path paired up to filetype
-                target_path = str(bids_path.copy()).rstrip('.edf')+'_targets.pickle'
+                target_path = str(self.bids_path.copy()).rstrip('.edf')+'_targets.pickle'
                 target_dict = {'uid':self.uid,'target':self.target,'annotation':desc}
                 pickle.dump(target_dict,open(target_path,"wb"))
 
             except:
 
                 # If the data fails to write in anyway, save the raw as a pickle so we can fix later without redownloading it
-                error_path = str(bids_path.copy()).rstrip('.edf')+'.pickle'
+                error_path = str(self.bids_path.copy()).rstrip('.edf')+'.pickle'
                 pickle.dump((raw,events,self.event_mapping),open(error_path,"wb"))
 
     def direct_save(self,idx,raw):
 
         # Save the edf in bids format
-        session_str = "%s%03d" %(self.args.session,self.session_number)
-        bids_path   = mne_bids.BIDSPath(root=self.args.bidsroot, datatype='eeg', session=session_str, subject='%04d' %(self.subject_num), run=idx+1, task='task')
-        write_raw_bids(bids_path=bids_path, raw=raw, allow_preload=True, format='EDF',verbose=False,overwrite=True)
-
+        run_number     = int(self.file_idx)+1
+        session_str    = "%s%03d" %(self.args.session,self.session_number)
+        self.bids_path = mne_bids.BIDSPath(root=self.args.bidsroot, datatype='eeg', session=session_str, subject='%05d' %(self.subject_num), run=run_number, task='task')
+        write_raw_bids(bids_path=self.bids_path, raw=raw, allow_preload=True, format='EDF',verbose=False,overwrite=True)
+        
         # Save the targets with the edf path paired up to filetype
-        target_path = str(bids_path.copy()).rstrip('.edf')+'_targets.pickle'
+        target_path = str(self.bids_path.copy()).rstrip('.edf')+'_targets.pickle'
         target_dict = {'uid':self.uid,'target':self.target}
         pickle.dump(target_dict,open(target_path,"wb"))
 
@@ -155,8 +160,20 @@ class BIDS_handler:
             except AttributeError:
                 self.direct_save(idx,raw)
 
-        # Save the subject file info
-        iDF = PD.DataFrame([[self.current_file,self.uid,self.subject_num]],columns=['iEEG file','uid','subject_number'])
+        # Prepare some metadata for download
+        source  = np.array(['ieeg.org','edf'])
+        inds    = [self.args.ieeg,self.args.edf]
+        source  = source[inds][0]
+        user    = getpass.getuser()
+        gendate = date.today().strftime("%d-%m-%y")
+        if self.args.annotations:
+            times = 'annots'
+        else:
+            times = f"{self.args.start}_{self.args.duration}"
+
+        # Save the subject file info with source metadata
+        columns = ['orig_filename','source','creator','gendate','uid','subject_number','session_number','times']
+        iDF     = PD.DataFrame([[self.current_file,source,user,gendate,self.uid,self.subject_num,self.session_number,times]],columns=columns)
 
         if not path.exists(self.subject_path):
             subject_DF = iDF.copy()
@@ -164,4 +181,11 @@ class BIDS_handler:
             subject_DF = PD.read_csv(self.subject_path)
             subject_DF = PD.concat((subject_DF,iDF))
         subject_DF['subject_number'] = subject_DF['subject_number'].astype(str).str.zfill(4)
-        subject_DF.to_csv(self.subject_path,index=False)
+        subject_DF['session_number'] = subject_DF['session_number'].astype(str).str.zfill(4)
+
+        # Only write files one at a time
+        if self.write_lock != None:
+            with self.write_lock:
+                subject_DF.to_csv(self.subject_path,index=False)
+        else:
+            subject_DF.to_csv(self.subject_path,index=False)

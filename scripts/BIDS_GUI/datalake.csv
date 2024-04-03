@@ -1,0 +1,10 @@
+file,session,scan_type,data_type,modality,task,ce,acq
+dicom_FLAIR_3D_20220606160854_4.nii.gz,ses-preimplant001,MRI,ct,FLAIR,task-audio,ce-gad,acq-ax_3d_mprage
+dicom_T1w_MPR_20220606160854_2.nii.gz,ses-preimplant001,MRI,ct,FLAIR,task-audio,ce-gad,acq-ax_3d_mprage
+dicom_T1w_MPR_20220606160854_101.json,ses-preimplant001,MRI,ct,FLAIR,task-audio,ce-gad,acq-ax_3d_mprage
+dicom_TOF_3D_multi-slab_R2_20220606160854_109_i00002.json,ses-preimplant001,MRI,ct,FLAIR,task-audio,ce-gad,acq-ax_3d_mprage
+dicom_TOF_3D_multi-slab_R2_20220606160854_109_i00014.json,ses-preimplant001,MRI,ct,FLAIR,task-audio,ce-gad,acq-ax_3d_mprage
+dicom_T2w_SPC_20220606160854_105.nii.gz,ses-preimplant001,MRI,ct,FLAIR,task-audio,ce-gad,acq-ax_3d_mprage
+dicom_TOF_3D_multi-slab_R2_20220606160854_108_i00007.json,ses-preimplant001,MRI,ct,FLAIR,task-audio,ce-gad,acq-ax_3d_mprage
+dicom_T2w_SPC_20220606160854_105a.nii.gz,ses-preimplant002,MRI,ct,FLAIR,task-audio,ce-gad,acq-ax_3d_mprage
+dicom_T1w_MPR_20220606160854_101.nii.gz,ses-preimplant002,MRI,ct,FLAIR,task-audio,ce-gad,acq-ax_3d_mprage

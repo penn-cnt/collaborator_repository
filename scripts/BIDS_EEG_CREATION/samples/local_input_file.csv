@@ -1,0 +1,7 @@
+orig_filename,uid,target
+/Users/bjprager/Documents/GitHub/scalp_deep-learning/user_data/BIDS/sub-00001/ses-preimplant001/eeg/sub-00001_ses-preimplant001_task-task_run-05_eeg.edf,1,epilepsy_A
+/Users/bjprager/Documents/GitHub/scalp_deep-learning/user_data/BIDS/sub-00001/ses-preimplant001/eeg/sub-00001_ses-preimplant001_task-task_run-04_eeg.edf,1,epilepsy_A
+/Users/bjprager/Documents/GitHub/scalp_deep-learning/user_data/BIDS/sub-00001/ses-preimplant001/eeg/sub-00001_ses-preimplant001_task-task_run-06_eeg.edf,1,epilepsy_A
+/Users/bjprager/Documents/GitHub/scalp_deep-learning/user_data/BIDS/sub-0268/ses-preimplant001/eeg/sub-0268_ses-preimplant001_task-task_run-02_eeg.edf,2,epilepsy_B
+/Users/bjprager/Documents/GitHub/scalp_deep-learning/user_data/BIDS/sub-0268/ses-preimplant001/eeg/sub-0268_ses-preimplant001_task-task_run-03_eeg.edf,2,epilepsy_B
+/Users/bjprager/Documents/GitHub/scalp_deep-learning/user_data/BIDS/sub-0268/ses-preimplant001/eeg/sub-0268_ses-preimplant001_task-task_run-04_eeg.edf,2,epilepsy_B
